@@ -8,8 +8,6 @@ socket.on("welcome", (data) => {
 });
 
 const emitToServer = document.getElementById("emit-to-server");
-console.log(emitToServer);
-
 emitToServer.addEventListener("click", () => {
     socket.emit("server","Hola desde el cliente ");
 });
@@ -17,3 +15,12 @@ emitToServer.addEventListener("click", () => {
 socket.on("everyone", (data) => {
     console.log(data);
 });
+
+const emitToLast = document.getElementById("emit-to-last");
+emitToLast.addEventListener("click", () => {
+    socket.emit("last","Hola, tu eres el ultimo");
+});
+
+socket.on("salute", (message) => {
+    console.log(message);
+  });

@@ -7,6 +7,8 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer);
 
+const socketsOnline = [];
+
 app.use(express.static(path.join(__dirname,"views")))
 
 app.get("/", (req, res) => {
@@ -14,6 +16,8 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
+
+   socketsOnline.push(socket.id)
 
    socket.on("disconnect", () => {
         console.log(`el socket ${socket.id} se ha desconectado`);
@@ -32,6 +36,12 @@ io.on("connection", (socket) => {
 
    //EMISION A TODOS LOS CLIENTES
    io.emit("everyone",`${socket.id} se ha conectado`);
+
+   //EMISION A UNO SOLO
+   socket.on("last", (message) => {
+     const lastSocket = socketsOnline[socketsOnline.length - 1];
+     io.to(lastSocket).emit("salute",message);
+   });
 });
 
 
