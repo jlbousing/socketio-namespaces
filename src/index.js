@@ -42,6 +42,12 @@ io.on("connection", (socket) => {
      const lastSocket = socketsOnline[socketsOnline.length - 1];
      io.to(lastSocket).emit("salute",message);
    });
+
+   socket.on("circle position", (position) => {
+
+     //SE MANDA LA POSICION A TODOS LOS CLIENTES CONECTADOS
+     socket.broadcast.emit("move circle",position);
+   });
 });
 
 
