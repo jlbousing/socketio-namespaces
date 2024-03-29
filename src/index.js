@@ -14,7 +14,16 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-    console.log(socket.id);
+
+   socket.on("disconnect", () => {
+        console.log(`el socket ${socket.id} se ha desconectado`);
+   });
+
+   socket.conn.once("upgrade", () => {
+        console.log("hemos pasado de http Long-Polling a ",socket.conn.transport.name)
+   });
 });
+
+
 
 httpServer.listen(3000);
