@@ -22,6 +22,16 @@ io.on("connection", (socket) => {
    socket.conn.once("upgrade", () => {
         console.log("hemos pasado de http Long-Polling a ",socket.conn.transport.name)
    });
+
+   //EMISION BASICA
+   socket.emit("welcome","welcome Estas conectado");
+
+   socket.on("server", (data) => {
+          console.log(data);
+   });
+
+   //EMISION A TODOS LOS CLIENTES
+   io.emit("everyone",`${socket.id} se ha conectado`);
 });
 
 
