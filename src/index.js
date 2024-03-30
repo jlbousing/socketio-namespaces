@@ -15,11 +15,20 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/views/index.html");
 });
 
-io.on("connection", (socket) => {
+const teachers = io.of("teachers");
+const students = io.of("students");
 
-   
+teachers.on("connection", (socket) => {
+
+  console.log(`${socket.id} se ha conectado a la sala de profes`)
+
 });
 
+students.on("connection", (socket) => {
+
+  console.log(`${socket.id} se ha conectado a la sala de estudiants`);
+
+});
 
 
 httpServer.listen(3000);
